@@ -1,23 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import Navigasibar from "./components/Navigasibar";
+import Addtodo from "./components/Addtodo";
+import Todolist from "./components/Todolist";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App bg-secondary" style={{ minHeight: "100vh" }}>
+      <Navigasibar />
+      <main>
+        <Addtodo />
+        <Todolist statusTodo="UNCOMPLETED" />
+        <Todolist statusTodo="COMPLETED" />
+      </main>
     </div>
   );
 }
