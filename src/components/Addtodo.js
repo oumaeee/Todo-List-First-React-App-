@@ -1,13 +1,12 @@
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 function Addtodo(props) {
   const [toDo, setToDo] = useState({ do: "", date: "", isCompleted: false, id: "" });
   const add = (e) => {
     e.preventDefault();
     setToDo({ ...toDo, id: Date.now() });
-    props.addToDoArray(toDo);
+    props.dispatch({ type: "addToDo", newToDo: toDo });
   };
-
   return (
     <Container className="rounded" style={{ backgroundColor: "#eee" }}>
       <Row className="pb-3">
