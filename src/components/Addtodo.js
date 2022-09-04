@@ -1,12 +1,27 @@
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 function Addtodo(props) {
-  const [toDo, setToDo] = useState({ do: "", date: "", isCompleted: false, id: "" });
+  const [toDo, setToDo] = useState();
+  const [date, setDate] = useState();
+  const [id, setId] = useState();
   const add = (e) => {
     e.preventDefault();
-    setToDo({ ...toDo, id: Date.now() });
-    props.dispatch({ type: "addToDo", newToDo: toDo });
+    setId(Date.now());
   };
+  const isMounted = useRef(false);
+  const isMounted2 = useRef(false);
+  useEffect(() => {
+    if (isMounted2.current) {
+      if (isMounted.current) {
+        props.dispatch({ type: "addToDo", newToDo: { do: toDo, date: date, id: id, isCompleted: false } });
+      } else {
+        isMounted.current = true;
+      }
+    } else {
+      isMounted2.current = true;
+    }
+    // props.dispatch({ type: "addToDo", newToDo: { do: toDo, date: date, id: id, isCompleted: false } });
+  }, [id]);
   return (
     <Container className="rounded" style={{ backgroundColor: "#eee" }}>
       <Row className="pb-3">
@@ -21,14 +36,14 @@ function Addtodo(props) {
                     type="text"
                     placeholder="Enter To do"
                     required
-                    onChange={(e) => setToDo({ ...toDo, do: e.target.value })}
+                    onChange={(e) => setToDo(e.target.value)}
                   />
                 </Form.Group>
               </Col>
               <Col xs={12} lg={6}>
                 <Form.Group className="" controlId="formBasicDate">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control type="date" required onChange={(e) => setToDo({ ...toDo, date: e.target.value })} />
+                  <Form.Control type="date" required onChange={(e) => setDate(e.target.value)} />
                 </Form.Group>
               </Col>
             </Row>
